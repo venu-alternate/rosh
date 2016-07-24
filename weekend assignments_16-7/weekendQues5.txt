@@ -1,0 +1,339 @@
+> SELECT CD.CRIMINAL_NAME, SUM(CD.NO_OF_CRIMES*CW.CRIME_WEIGHTAGE) as WANTED FROM CRIMINAL_DATA cd, CRIMINAL_WEIGHTAGE cw where CD.CRIME_TYPE = CW.CRIME_TYPE group by CD.CRIMINAL_NAME order by WANTED desc
+CRIMINAL_NAME       WANTED
+--------------- ----------
+ABC                   1600 
+BCD                    990 
+SARANATH               900 
+SNEHA                  880 
+CDE                    800 
+EFG                    800 
+ROSHAN                 640 
+VARUN                  500 
+VENKY                  400 
+FGH                    400 
+DEF                    140 
+
+ 11 rows selected 
+
+> SELECT CD.CRIMINAL_NAME,
+  SUM(CD.NO_OF_CRIMES*CW.CRIME_WEIGHTAGE) AS WANTED, RANK() over (order by WANTED) 
+FROM CRIMINAL_DATA cd,
+  CRIMINAL_WEIGHTAGE cw
+WHERE CD.CRIME_TYPE = CW.CRIME_TYPE
+GROUP BY CD.CRIMINAL_NAME
+ORDER BY WANTED DESC
+
+Error starting at line : 1 in command -
+SELECT CD.CRIMINAL_NAME,
+  SUM(CD.NO_OF_CRIMES*CW.CRIME_WEIGHTAGE) AS WANTED, RANK() over (order by WANTED) 
+FROM CRIMINAL_DATA cd,
+  CRIMINAL_WEIGHTAGE cw
+WHERE CD.CRIME_TYPE = CW.CRIME_TYPE
+GROUP BY CD.CRIMINAL_NAME
+ORDER BY WANTED DESC
+Error at Command Line : 2 Column : 76
+Error report -
+SQL Error: ORA-00904: "WANTED": invalid identifier
+00904. 00000 -  "%s: invalid identifier"
+*Cause:    
+*Action:
+> SELECT CD.CRIMINAL_NAME,
+  SUM(CD.NO_OF_CRIMES*CW.CRIME_WEIGHTAGE) AS WANTED, RANK() over (order by CD.NO_OF_CRIMES*CW.CRIME_WEIGHTAGE) 
+FROM CRIMINAL_DATA cd,
+  CRIMINAL_WEIGHTAGE cw
+WHERE CD.CRIME_TYPE = CW.CRIME_TYPE
+GROUP BY CD.CRIMINAL_NAME
+ORDER BY WANTED DESC
+
+Error starting at line : 1 in command -
+SELECT CD.CRIMINAL_NAME,
+  SUM(CD.NO_OF_CRIMES*CW.CRIME_WEIGHTAGE) AS WANTED, RANK() over (order by CD.NO_OF_CRIMES*CW.CRIME_WEIGHTAGE) 
+FROM CRIMINAL_DATA cd,
+  CRIMINAL_WEIGHTAGE cw
+WHERE CD.CRIME_TYPE = CW.CRIME_TYPE
+GROUP BY CD.CRIMINAL_NAME
+ORDER BY WANTED DESC
+Error at Command Line : 2 Column : 76
+Error report -
+SQL Error: ORA-00979: not a GROUP BY expression
+00979. 00000 -  "not a GROUP BY expression"
+*Cause:    
+*Action:
+> SELECT CD.CRIMINAL_NAME,
+  SUM(CD.NO_OF_CRIMES*CW.CRIME_WEIGHTAGE) AS WANTED, RANK() over (order by CD.NO_OF_CRIMES*CW.CRIME_WEIGHTAGE) 
+FROM CRIMINAL_DATA cd,
+  CRIMINAL_WEIGHTAGE cw
+WHERE CD.CRIME_TYPE = CW.CRIME_TYPE
+GROUP BY CD.CRIMINAL_NAME
+
+Error starting at line : 1 in command -
+SELECT CD.CRIMINAL_NAME,
+  SUM(CD.NO_OF_CRIMES*CW.CRIME_WEIGHTAGE) AS WANTED, RANK() over (order by CD.NO_OF_CRIMES*CW.CRIME_WEIGHTAGE) 
+FROM CRIMINAL_DATA cd,
+  CRIMINAL_WEIGHTAGE cw
+WHERE CD.CRIME_TYPE = CW.CRIME_TYPE
+GROUP BY CD.CRIMINAL_NAME
+Error at Command Line : 2 Column : 76
+Error report -
+SQL Error: ORA-00979: not a GROUP BY expression
+00979. 00000 -  "not a GROUP BY expression"
+*Cause:    
+*Action:
+> SELECT CD.CRIMINAL_NAME,
+  SUM(CD.NO_OF_CRIMES*CW.CRIME_WEIGHTAGE) AS WANTED 
+FROM CRIMINAL_DATA cd,
+  CRIMINAL_WEIGHTAGE cw
+WHERE CD.CRIME_TYPE = CW.CRIME_TYPE
+GROUP BY CD.CRIMINAL_NAME
+CRIMINAL_NAME       WANTED
+--------------- ----------
+FGH                    400 
+BCD                    990 
+CDE                    800 
+DEF                    140 
+ABC                   1600 
+ROSHAN                 640 
+EFG                    800 
+VARUN                  500 
+VENKY                  400 
+SARANATH               900 
+SNEHA                  880 
+
+ 11 rows selected 
+
+> SELECT CD.CRIMINAL_NAME,
+  SUM(CD.NO_OF_CRIMES*CW.CRIME_WEIGHTAGE) AS WANTED 
+FROM CRIMINAL_DATA cd,
+  CRIMINAL_WEIGHTAGE cw
+WHERE CD.CRIME_TYPE = CW.CRIME_TYPE
+order by wanted
+
+Error starting at line : 1 in command -
+SELECT CD.CRIMINAL_NAME,
+  SUM(CD.NO_OF_CRIMES*CW.CRIME_WEIGHTAGE) AS WANTED 
+FROM CRIMINAL_DATA cd,
+  CRIMINAL_WEIGHTAGE cw
+WHERE CD.CRIME_TYPE = CW.CRIME_TYPE
+order by wanted
+Error at Command Line : 1 Column : 8
+Error report -
+SQL Error: ORA-00937: not a single-group group function
+00937. 00000 -  "not a single-group group function"
+*Cause:    
+*Action:
+> SELECT CD.CRIMINAL_NAME,
+  SUM(CD.NO_OF_CRIMES*CW.CRIME_WEIGHTAGE) AS WANTED 
+FROM CRIMINAL_DATA cd,
+  CRIMINAL_WEIGHTAGE cw
+WHERE CD.CRIME_TYPE = CW.CRIME_TYPE
+group by cd.criminal_name
+CRIMINAL_NAME       WANTED
+--------------- ----------
+FGH                    400 
+BCD                    990 
+CDE                    800 
+DEF                    140 
+ABC                   1600 
+ROSHAN                 640 
+EFG                    800 
+VARUN                  500 
+VENKY                  400 
+SARANATH               900 
+SNEHA                  880 
+
+ 11 rows selected 
+
+> SELECT CD.CRIMINAL_NAME,
+  SUM(CD.NO_OF_CRIMES*CW.CRIME_WEIGHTAGE) AS WANTED 
+FROM CRIMINAL_DATA cd,
+  CRIMINAL_WEIGHTAGE cw
+WHERE CD.CRIME_TYPE = CW.CRIME_TYPE
+group by cd.criminal_name order by wanted desc
+CRIMINAL_NAME       WANTED
+--------------- ----------
+ABC                   1600 
+BCD                    990 
+SARANATH               900 
+SNEHA                  880 
+CDE                    800 
+EFG                    800 
+ROSHAN                 640 
+VARUN                  500 
+VENKY                  400 
+FGH                    400 
+DEF                    140 
+
+ 11 rows selected 
+
+> declare 
+ cursor criminal is (SELECT CD.CRIMINAL_NAME,
+  SUM(CD.NO_OF_CRIMES*CW.CRIME_WEIGHTAGE) AS WANTED 
+FROM CRIMINAL_DATA cd,
+  CRIMINAL_WEIGHTAGE cw
+WHERE CD.CRIME_TYPE = CW.CRIME_TYPE group by cd.criminal_name order by wanted desc);
+c_name criminal_data.criminal_name%TYPE;
+score number(10);
+begin 
+open c1;
+loop 
+  fetch c1 into c_name,score;
+  insert into most_wanted values(c_name, s1.nextval);
+  exit when c1%notfound;
+  end loop;
+  close c1;
+  end;
+  
+
+Error starting at line : 11 in command -
+declare 
+ cursor criminal is (SELECT CD.CRIMINAL_NAME,
+  SUM(CD.NO_OF_CRIMES*CW.CRIME_WEIGHTAGE) AS WANTED 
+FROM CRIMINAL_DATA cd,
+  CRIMINAL_WEIGHTAGE cw
+WHERE CD.CRIME_TYPE = CW.CRIME_TYPE group by cd.criminal_name order by wanted desc);
+c_name criminal_data.criminal_name%TYPE;
+score number(10);
+begin 
+open c1;
+loop 
+  fetch c1 into c_name,score;
+  insert into most_wanted values(c_name, s1.nextval);
+  exit when c1%notfound;
+  end loop;
+  close c1;
+  end;
+  
+Error report -
+ORA-06550: line 6, column 63:
+PL/SQL: ORA-00907: missing right parenthesis
+ORA-06550: line 2, column 21:
+PL/SQL: SQL Statement ignored
+06550. 00000 -  "line %s, column %s:\n%s"
+*Cause:    Usually a PL/SQL compilation error.
+*Action:
+> declare 
+ cursor criminal is (SELECT CD.CRIMINAL_NAME, SUM(CD.NO_OF_CRIMES*CW.CRIME_WEIGHTAGE) AS WANTED FROM CRIMINAL_DATA cd,CRIMINAL_WEIGHTAGE cw WHERE CD.CRIME_TYPE = CW.CRIME_TYPE group by cd.criminal_name order by wanted desc);
+c_name criminal_data.criminal_name%TYPE;
+score number(10);
+begin 
+open c1;
+loop 
+  fetch c1 into c_name,score;
+  insert into most_wanted values(c_name, s1.nextval);
+  exit when c1%notfound;
+  end loop;
+  close c1;
+  end;
+  
+
+Error starting at line : 11 in command -
+declare 
+ cursor criminal is (SELECT CD.CRIMINAL_NAME, SUM(CD.NO_OF_CRIMES*CW.CRIME_WEIGHTAGE) AS WANTED FROM CRIMINAL_DATA cd,CRIMINAL_WEIGHTAGE cw WHERE CD.CRIME_TYPE = CW.CRIME_TYPE group by cd.criminal_name order by wanted desc);
+c_name criminal_data.criminal_name%TYPE;
+score number(10);
+begin 
+open c1;
+loop 
+  fetch c1 into c_name,score;
+  insert into most_wanted values(c_name, s1.nextval);
+  exit when c1%notfound;
+  end loop;
+  close c1;
+  end;
+  
+Error report -
+ORA-06550: line 2, column 203:
+PL/SQL: ORA-00907: missing right parenthesis
+ORA-06550: line 2, column 21:
+PL/SQL: SQL Statement ignored
+06550. 00000 -  "line %s, column %s:\n%s"
+*Cause:    Usually a PL/SQL compilation error.
+*Action:
+> declare 
+ cursor criminal is (SELECT CD.CRIMINAL_NAME, SUM(CD.NO_OF_CRIMES*CW.CRIME_WEIGHTAGE) AS WANTED FROM CRIMINAL_DATA cd,CRIMINAL_WEIGHTAGE cw WHERE CD.CRIME_TYPE = CW.CRIME_TYPE group by cd.criminal_name);-- order by wanted desc);
+c_name criminal_data.criminal_name%TYPE;
+score number(10);
+begin 
+open c1;
+loop 
+  fetch c1 into c_name,score;
+  insert into most_wanted values(c_name, s1.nextval);
+  exit when c1%notfound;
+  end loop;
+  close c1;
+  end;
+  
+
+Error starting at line : 11 in command -
+declare 
+ cursor criminal is (SELECT CD.CRIMINAL_NAME, SUM(CD.NO_OF_CRIMES*CW.CRIME_WEIGHTAGE) AS WANTED FROM CRIMINAL_DATA cd,CRIMINAL_WEIGHTAGE cw WHERE CD.CRIME_TYPE = CW.CRIME_TYPE group by cd.criminal_name);-- order by wanted desc);
+c_name criminal_data.criminal_name%TYPE;
+score number(10);
+begin 
+open c1;
+loop 
+  fetch c1 into c_name,score;
+  insert into most_wanted values(c_name, s1.nextval);
+  exit when c1%notfound;
+  end loop;
+  close c1;
+  end;
+  
+Error report -
+ORA-06550: line 6, column 6:
+PLS-00201: identifier 'C1' must be declared
+ORA-06550: line 6, column 1:
+PL/SQL: SQL Statement ignored
+ORA-06550: line 8, column 9:
+PLS-00201: identifier 'C1' must be declared
+ORA-06550: line 8, column 3:
+PL/SQL: SQL Statement ignored
+ORA-06550: line 10, column 13:
+PLS-00201: identifier 'C1' must be declared
+ORA-06550: line 10, column 3:
+PL/SQL: Statement ignored
+ORA-06550: line 12, column 9:
+PLS-00201: identifier 'C1' must be declared
+ORA-06550: line 12, column 3:
+PL/SQL: SQL Statement ignored
+06550. 00000 -  "line %s, column %s:\n%s"
+*Cause:    Usually a PL/SQL compilation error.
+*Action:
+> declare 
+ cursor criminal is (SELECT CD.CRIMINAL_NAME, SUM(CD.NO_OF_CRIMES*CW.CRIME_WEIGHTAGE) AS WANTED FROM CRIMINAL_DATA cd,CRIMINAL_WEIGHTAGE cw WHERE CD.CRIME_TYPE = CW.CRIME_TYPE group by cd.criminal_name);-- order by wanted desc);
+c_name criminal_data.criminal_name%TYPE;
+score number(10);
+begin 
+open criminal;
+loop 
+  fetch criminal into c_name,score;
+  insert into most_wanted values(c_name, s1.nextval);
+  exit when c1%notfound;
+  end loop;
+  close criminal;
+  end;
+  
+
+Error starting at line : 11 in command -
+declare 
+ cursor criminal is (SELECT CD.CRIMINAL_NAME, SUM(CD.NO_OF_CRIMES*CW.CRIME_WEIGHTAGE) AS WANTED FROM CRIMINAL_DATA cd,CRIMINAL_WEIGHTAGE cw WHERE CD.CRIME_TYPE = CW.CRIME_TYPE group by cd.criminal_name);-- order by wanted desc);
+c_name criminal_data.criminal_name%TYPE;
+score number(10);
+begin 
+open criminal;
+loop 
+  fetch criminal into c_name,score;
+  insert into most_wanted values(c_name, s1.nextval);
+  exit when c1%notfound;
+  end loop;
+  close criminal;
+  end;
+  
+Error report -
+ORA-06550: line 10, column 13:
+PLS-00201: identifier 'C1' must be declared
+ORA-06550: line 10, column 3:
+PL/SQL: Statement ignored
+06550. 00000 -  "line %s, column %s:\n%s"
+*Cause:    Usually a PL/SQL compilation error.
+*Action:

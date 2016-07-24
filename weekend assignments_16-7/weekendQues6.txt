@@ -1,0 +1,57 @@
+> set serveroutput on
+> create table patients(patient_name varchar2(15), age number(3),visit_date date,
+temperature number(4,1) default 98.6)
+table PATIENTS created.
+> create or replace procedure enter_patient_data(pName varchar,pAge number,
+pVisit_date date,pTemperature number);
+begin
+insert into patients values(pName,pAge,pVisit_date,pTemperature);
+end;
+PROCEDURE ENTER_PATIENT_DATA compiled
+Errors: check compiler log
+> create or replace procedure enter_patient_data(pName varchar,pAge number,
+pVisit_date date,pTemperature number) is 
+begin
+insert into patients values(pName,pAge,pVisit_date,pTemperature);
+end;
+PROCEDURE ENTER_PATIENT_DATA compiled
+> execute enter_patient('VARUN',22,'12-JUL-2016')
+
+Error starting at line : 9 in command -
+execute enter_patient('VARUN',22,'12-JUL-2016')
+Error report -
+ORA-06550: line 1, column 7:
+PLS-00201: identifier 'ENTER_PATIENT' must be declared
+ORA-06550: line 1, column 7:
+PL/SQL: Statement ignored
+06550. 00000 -  "line %s, column %s:\n%s"
+*Cause:    Usually a PL/SQL compilation error.
+*Action:
+> execute enter_patient_data('VARUN',22,'12-JUL-2016')
+
+Error starting at line : 9 in command -
+execute enter_patient_data('VARUN',22,'12-JUL-2016')
+Error report -
+ORA-06550: line 1, column 7:
+PLS-00306: wrong number or types of arguments in call to 'ENTER_PATIENT_DATA'
+ORA-06550: line 1, column 7:
+PL/SQL: Statement ignored
+06550. 00000 -  "line %s, column %s:\n%s"
+*Cause:    Usually a PL/SQL compilation error.
+*Action:
+> create or replace procedure enter_patient_data(pName varchar,pAge number,
+pVisit_date date,pTemperature number default 98.6) is 
+begin
+insert into patients values(pName,pAge,pVisit_date,pTemperature);
+end;
+PROCEDURE ENTER_PATIENT_DATA compiled
+> execute enter_patient_data('VARUN',22,'12-JUL-2016')
+anonymous block completed
+> execute enter_patient_data('ROSHAN',21,'13-JUL-2016',98.3)
+anonymous block completed
+> select * from patients
+PATIENT_NAME           AGE VISIT_DATE TEMPERATURE
+--------------- ---------- ---------- -----------
+VARUN                   22 12-JUL-16         98.6 
+ROSHAN                  21 13-JUL-16         98.3 
+
